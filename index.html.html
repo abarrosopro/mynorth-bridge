@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyNorth Bridge® — Sistema de Inteligência Relacional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0B1F3A;
+    --navy-mid: #142D52;
+    --navy-light: #1E3D6B;
+    --gold: #C9973A;
+    --gold-light: #E8B85A;
+    --gold-pale: #F5E8CA;
+    --off-white: #F7F5F0;
+    --white: #FFFFFF;
+    --muted: #8A8E96;
+    --text-dark: #0D1117;
+    --text-body: #2C3340;
+    --border: rgba(201,151,58,0.2);
+    --section-gap: 6rem;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text-body);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,151,58,0.15);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -5%;
+    right: 5%;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,151,58,0.1);
+    pointer-events: none;
+  }
+
+  .hero-left {
+    padding: 6rem 4rem 6rem 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-right {
+    padding: 6rem 6rem 6rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .logo-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(201,151,58,0.12);
+    border: 1px solid rgba(201,151,58,0.3);
+    border-radius: 2px;
+    padding: 8px 16px;
+    margin-bottom: 2.5rem;
+    width: fit-content;
+  }
+
+  .logo-tag span {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .logo-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 4vw, 3.8rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    max-width: 420px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 16px 32px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s;
+    width: fit-content;
+  }
+
+  .hero-cta:hover { background: var(--gold-light); }
+
+  .hero-cta-arrow {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+
+  .hero-stat-block {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .hero-stat {
+    border-left: 2px solid var(--gold);
+    padding-left: 1.5rem;
+  }
+
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-stat-num span {
+    color: var(--gold-light);
+  }
+
+  .hero-stat-label {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  /* ── CHALLENGE STRIP ── */
+  .challenge-strip {
+    background: var(--navy-mid);
+    padding: 2rem 6rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    border-top: 1px solid rgba(201,151,58,0.15);
+    border-bottom: 1px solid rgba(201,151,58,0.15);
+    flex-wrap: wrap;
+  }
+
+  .challenge-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  .challenge-items {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .challenge-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.88rem;
+  }
+
+  .challenge-item::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── SECTION COMUM ── */
+  .section {
+    padding: var(--section-gap) 6rem;
+  }
+
+  .section-alt {
+    background: var(--white);
+  }
+
+  .section-dark {
+    background: var(--navy);
+  }
+
+  .section-header {
+    margin-bottom: 4rem;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+    max-width: 620px;
+  }
+
+  .section-dark h2 {
+    color: var(--white);
+  }
+
+  .section-desc {
+    margin-top: 1.2rem;
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 560px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .section-dark .section-desc {
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── O QUE É ── */
+  .what-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .what-text p {
+    font-size: 1.05rem;
+    color: var(--text-body);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .what-text strong {
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .bridge-diagram {
+    background: var(--navy);
+    border-radius: 4px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bridge-diagram::before {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,151,58,0.2);
+  }
+
+  .bridge-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 1rem;
+  }
+
+  .bridge-node {
+    flex: 1;
+    text-align: center;
+    padding: 1rem 0.5rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+  }
+
+  .bridge-node-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 0.3rem;
+  }
+
+  .bridge-node-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  .bridge-connector {
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(201,151,58,0.3), var(--gold), rgba(201,151,58,0.3));
+    flex-shrink: 0;
+  }
+
+  .bridge-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .bridge-tag {
+    font-size: 0.68rem;
+    padding: 4px 10px;
+    border: 1px solid rgba(201,151,58,0.3);
+    border-radius: 2px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── PILARES ── */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .pillar-card {
+    background: var(--white);
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+
+  .pillar-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(201,151,58,0.12);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .pillar-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .pillar-text {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .pillar-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 40px;
+    background: var(--gold);
+  }
+
+  /* ── COMO FUNCIONA ── */
+  .how-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .how-steps {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .how-step {
+    display: flex;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(11,31,58,0.08);
+  }
+
+  .how-step:last-child { border-bottom: none; }
+
+  .how-step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold);
+    padding-top: 0.2rem;
+    flex-shrink: 0;
+    min-width: 24px;
+  }
+
+  .how-step-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+
+  .how-step-text {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* Quando aplicar ── */
+  .when-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .when-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,151,58,0.2);
+    border-radius: 3px;
+    padding: 1.8rem;
+    position: relative;
+  }
+
+  .when-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0.4;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .when-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .when-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .when-text {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── ROI / BENEFÍCIOS ── */
+  .roi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .roi-column-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .roi-column-title h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  .roi-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--gold-pale);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .roi-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(11,31,58,0.06);
+  }
+
+  .roi-item:last-child { border-bottom: none; }
+
+  .roi-bullet {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--gold-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .roi-bullet svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .roi-item-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .roi-item-text {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── PROTOCOLO ── */
+  .protocol-grid {
+    display: flex;
+    gap: 0;
+    background: var(--navy-mid);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(201,151,58,0.15);
+  }
+
+  .protocol-letter {
+    flex: 1;
+    padding: 2.5rem 2rem;
+    border-right: 1px solid rgba(201,151,58,0.1);
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .protocol-letter:last-child { border-right: none; }
+
+  .protocol-letter:hover {
+    background: rgba(201,151,58,0.06);
+  }
+
+  .p-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+  }
+
+  .p-word {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    display: block;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .p-desc {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* ── PROVA DE CONCEITO ── */
+  .trial-wrapper {
+    background: var(--navy);
+    border: 1px solid rgba(201,151,58,0.25);
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  .trial-left {
+    padding: 4rem;
+    border-right: 1px solid rgba(201,151,58,0.15);
+  }
+
+  .trial-right {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .trial-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201,151,58,0.1);
+    border: 1px solid rgba(201,151,58,0.3);
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .trial-badge span {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .trial-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .trial-left p {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .trial-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 14px 28px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 2px;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .trial-cta:hover { background: var(--gold-light); }
+
+  .trial-feature {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.2rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,151,58,0.1);
+    border-radius: 3px;
+  }
+
+  .trial-feature-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(201,151,58,0.12);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .trial-feature-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.2rem;
+  }
+
+  .trial-feature-text {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* ── DEPOIMENTOS ── */
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background: var(--white);
+    border: 1px solid rgba(11,31,58,0.08);
+    border-radius: 4px;
+    padding: 2rem;
+  }
+
+  .t-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--gold);
+    line-height: 0.5;
+    margin-bottom: 1rem;
+    opacity: 0.4;
+  }
+
+  .t-text {
+    font-size: 0.9rem;
+    color: var(--text-body);
+    line-height: 1.75;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .t-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .t-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+  }
+
+  .t-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .t-role {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* ── AUTORIDADE ── */
+  .authority-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .authority-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,151,58,0.2);
+    border-radius: 4px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+  }
+
+  .authority-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 0 auto 1.5rem;
+  }
+
+  .authority-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--white);
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .authority-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .authority-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(201,151,58,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .authority-stat {
+    padding: 1rem;
+    background: var(--navy);
+    text-align: center;
+  }
+
+  .authority-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold-light);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .authority-stat-label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.4;
+  }
+
+  .authority-bio p {
+    font-size: 1rem;
+    color: var(--text-body);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .authority-bio strong {
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  /* ── RODAPÉ DE CONTATO ── */
+  .contact-bar {
+    background: var(--navy);
+    padding: 3rem 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(201,151,58,0.2);
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  .contact-brand span {
+    color: var(--gold);
+  }
+
+  .contact-items {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contact-item-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .contact-item-value {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    font-weight: 300;
+  }
+
+  .contact-item-value a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+  }
+
+  .contact-item-value a:hover {
+    color: var(--gold-light);
+  }
+
+  .spacer { height: 0.5rem; }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 4rem 3rem; }
+    .hero-right { padding: 0 3rem 4rem; }
+    .hero-stat-block { grid-template-columns: repeat(2, 1fr); }
+    .section { padding: 4rem 3rem; }
+    .challenge-strip { padding: 1.5rem 3rem; }
+    .contact-bar { padding: 2rem 3rem; }
+    .what-grid, .how-grid, .roi-grid, .trial-wrapper, .authority-wrapper { grid-template-columns: 1fr; }
+    .trial-left, .trial-right { padding: 2.5rem; }
+    .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonial-grid { grid-template-columns: 1fr 1fr; }
+    .protocol-grid { flex-wrap: wrap; }
+    .when-grid { grid-template-columns: 1fr; }
+    .how-grid { gap: 2.5rem; }
+    .trial-wrapper { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-left { padding: 3rem 1.5rem; }
+    .hero-right { padding: 0 1.5rem 3rem; }
+    .hero-stat-block { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .section { padding: 3rem 1.5rem; }
+    .challenge-strip { flex-direction: column; padding: 1.5rem; gap: 1rem; }
+    .contact-bar { flex-direction: column; padding: 2rem 1.5rem; }
+    .pillars-grid, .testimonial-grid { grid-template-columns: 1fr; }
+    .when-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="logo-tag">
+      <div class="logo-dot"></div>
+      <span>MyNorth Bridge® &nbsp;|&nbsp; Solução B2B</span>
+    </div>
+    <h1>A Engenharia da<br><em>Alta Performance<br>Relacional</em></h1>
+    <p class="hero-subtitle">
+      Lacunas de desempenho raramente são sobre competência técnica. São sobre a distância invisível entre o que líderes esperam e o que colaboradores compreendem. O MyNorth Bridge® fecha essa distância — de forma estruturada, mensurável e sem interromper a operação.
+    </p>
+    <a href="#trial" class="hero-cta">
+      Solicitar Prova de Conceito
+      <span class="hero-cta-arrow">→</span>
+    </a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-block">
+      <div class="hero-stat">
+        <div class="hero-stat-num">10<span>K+</span></div>
+        <div class="hero-stat-label">Profissionais impactados</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">20<span>+</span></div>
+        <div class="hero-stat-label">Anos de experiência aplicada</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-label">Pilares estratégicos</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">0<span>%</span></div>
+        <div class="hero-stat-label">Interrupção operacional</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAIXA DE DESAFIO -->
+<div class="challenge-strip">
+  <span class="challenge-label">O custo real do silêncio</span>
+  <div class="challenge-items">
+    <div class="challenge-item">Quiet quitting corrói a performance silenciosamente</div>
+    <div class="challenge-item">Lacunas de percepção não resolvidas geram turnover</div>
+    <div class="challenge-item">Feedback unilateral cria desengajamento crônico</div>
+    <div class="challenge-item">Risco psicossocial sem documentação e sem ação</div>
+  </div>
+</div>
+
+<!-- O QUE É -->
+<section class="section section-alt">
+  <div class="what-grid">
+    <div class="what-text">
+      <span class="eyebrow">O que é o MyNorth Bridge®</span>
+      <h2>Não é um formulário.<br>É um sistema de mediação profissional.</h2>
+      <div class="spacer"></div>
+      <div class="spacer"></div>
+      <p>A maioria das ferramentas de performance foi projetada para <strong>avaliar</strong> — julgar o que foi feito. O MyNorth Bridge® foi projetado para <strong>alinhar</strong> — eliminar o abismo entre o que líderes percebem e o que colaboradores vivenciam.</p>
+      <p>Ele opera como um protocolo de mediação profissional onde ambos os lados da relação de liderança ganham espaço estruturado para expressar expectativas, necessidades e realidades — com dados comportamentais como linguagem comum.</p>
+      <p>O resultado: <strong>clareza relacional que impulsiona performance operacional.</strong></p>
+    </div>
+    <div>
+      <div class="bridge-diagram">
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem;">O modelo de alinhamento</div>
+          <div class="bridge-row">
+            <div class="bridge-node">
+              <div class="bridge-node-label">Lado A</div>
+              <div class="bridge-node-name">Líder</div>
+            </div>
+            <div class="bridge-connector"></div>
+            <div style="flex:1.2;background:rgba(201,151,58,0.08);border:1px solid rgba(201,151,58,0.3);border-radius:3px;padding:0.8rem 0.5rem;text-align:center;">
+              <div style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.2rem;">Bridge®</div>
+              <div style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.9);">Protocolo A.C.H.A.R.</div>
+            </div>
+            <div class="bridge-connector"></div>
+            <div class="bridge-node">
+              <div class="bridge-node-label">Lado B</div>
+              <div class="bridge-node-name">Colaborador</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:1.5rem;">
+          <div style="padding:0.8rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:3px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;">Entrada</div>
+            <div style="font-size:0.78rem;color:rgba(255,255,255,0.65);">Expectativas e evidências comportamentais</div>
+          </div>
+          <div style="padding:0.8rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:3px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;">Saída</div>
+            <div style="font-size:0.78rem;color:rgba(255,255,255,0.65);">Relatório de alinhamento e plano de evolução</div>
+          </div>
+        </div>
+        <div class="bridge-tags">
+          <div class="bridge-tag">Sem dinâmicas de culpa</div>
+          <div class="bridge-tag">Diálogo baseado em fatos</div>
+          <div class="bridge-tag">Resultados documentados</div>
+          <div class="bridge-tag">Segurança psicossocial</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILARES -->
+<section class="section">
+  <div class="section-header">
+    <span class="eyebrow">Objetivos estratégicos</span>
+    <h2>Quatro pilares. Um sistema de confiança organizacional.</h2>
+  </div>
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <div class="pillar-accent"></div>
+      <div class="pillar-num">01</div>
+      <div class="pillar-title">Sincronia de Expectativas</div>
+      <p class="pillar-text">Identificamos e corrigimos lacunas de percepção entre o que líderes esperam e o que colaboradores compreendem, usando dados comportamentais como referência compartilhada.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-accent"></div>
+      <div class="pillar-num">02</div>
+      <div class="pillar-title">Prevenção Ativa de Conflitos</div>
+      <p class="pillar-text">Atuamos antes que desalinhamentos se tornem crises — endereçando rupturas de comunicação, desengajamento silencioso e sinais precoces de intenção de saída.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-accent"></div>
+      <div class="pillar-num">03</div>
+      <div class="pillar-title">Cultura de Transparência</div>
+      <p class="pillar-text">Institucionalizamos um espaço psicologicamente seguro para reflexão estruturada, construindo confiança mútua e uma cultura onde o diálogo honesto é norma profissional.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-accent"></div>
+      <div class="pillar-num">04</div>
+      <div class="pillar-title">Plano de Evolução Individual</div>
+      <p class="pillar-text">Cada sessão produz um roteiro documentado de desenvolvimento comportamental e relacional — conectando o crescimento individual diretamente às metas de performance da organização.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="section section-alt">
+  <div class="how-grid">
+    <div>
+      <span class="eyebrow">O processo</span>
+      <h2>Estruturado. Ágil. Impacto zero na operação.</h2>
+      <div class="spacer"></div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-step-num">I</div>
+          <div>
+            <div class="how-step-title">Alinhamento organizacional</div>
+            <p class="how-step-text">Definimos os pares estratégicos e os objetivos com a liderança — alinhando a intervenção ao contexto operacional atual e às prioridades de gestão de talentos da empresa.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">II</div>
+          <div>
+            <div class="how-step-title">Pesquisa de percepção</div>
+            <p class="how-step-text">Líder e colaborador respondem separadamente à Pesquisa de Percepção MyNorth® — gerando dados independentes, sem influência social e sem viés de resposta.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">III</div>
+          <div>
+            <div class="how-step-title">Sessões Bridge® individuais</div>
+            <p class="how-step-text">Sessões individuais de 1 hora por pessoa. O Protocolo A.C.H.A.R. garante que o diálogo seja ancorado em fatos, não em julgamentos — protegendo ambos os lados e gerando insight acionável.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">IV</div>
+          <div>
+            <div class="how-step-title">Entrega do relatório de alinhamento</div>
+            <p class="how-step-text">A organização recebe um relatório completo por par — lacunas de percepção mapeadas, áreas de risco sinalizadas e um plano de evolução concreto para cada participante.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">V</div>
+          <div>
+            <div class="how-step-title">Medição de impacto</div>
+            <p class="how-step-text">Documentação entregue para monitoramento contínuo, evidência de conformidade (NR-1 / gestão de riscos psicossociais) e acompanhamento mensurável do ROI ao longo dos ciclos seguintes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <span class="eyebrow" style="display:block;margin-bottom:1rem;">Quando aplicar</span>
+      <div class="when-grid" style="background:var(--navy);border-radius:4px;padding:1.5rem;gap:1rem;">
+        <div class="when-card">
+          <span class="when-tag">Ciclo de Excelência</span>
+          <div class="when-title">Desenvolvimento Semestral de Liderança</div>
+          <p class="when-text">Integrado ao desenvolvimento contínuo da liderança. Reforça a maturidade relacional como métrica de performance.</p>
+        </div>
+        <div class="when-card">
+          <span class="when-tag">Onboarding Estratégico</span>
+          <div class="when-title">Primeiros 90 Dias</div>
+          <p class="when-text">Aplicado no 3º mês de um novo colaborador ou novo líder. Assegura retenção precoce e previne desalinhamentos silenciosos antes que se consolidem.</p>
+        </div>
+        <div class="when-card">
+          <span class="when-tag">Intervenção de Performance</span>
+          <div class="when-title">Quando a Performance Cai</div>
+          <p class="when-text">Ativação imediata quando o rendimento declina, a comunicação se rompe ou o risco de desligamento se aproxima. Decisão baseada em dados, não em intuição.</p>
+        </div>
+        <div class="when-card">
+          <span class="when-tag">Gestão de Mudanças</span>
+          <div class="when-title">Reestruturações e Transições</div>
+          <p class="when-text">Aplicação preventiva em momentos de reorganização, transição de liderança ou fusão de equipes — evitando fraturas relacionais antes que aconteçam.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOLO ACHAR -->
+<section class="section section-dark">
+  <div class="section-header">
+    <span class="eyebrow">Fundamento técnico</span>
+    <h2>O Protocolo A.C.H.A.R.</h2>
+    <p class="section-desc">O framework comportamental que garante que cada sessão Bridge® seja ancorada em diálogo estruturado e baseado em evidências — não em percepção subjetiva.</p>
+  </div>
+  <div class="protocol-grid">
+    <div class="protocol-letter">
+      <div class="p-letter">A</div>
+      <span class="p-word">Autoconhecimento</span>
+      <p class="p-desc">O ponto de partida de qualquer crescimento profissional real e de qualquer diálogo genuinamente honesto</p>
+    </div>
+    <div class="protocol-letter">
+      <div class="p-letter">C</div>
+      <span class="p-word">Conhecimento</span>
+      <p class="p-desc">Domínio técnico e clareza de função mapeados às expectativas organizacionais do cargo</p>
+    </div>
+    <div class="protocol-letter">
+      <div class="p-letter">H</div>
+      <span class="p-word">Habilidades</span>
+      <p class="p-desc">Competências comportamentais avaliadas contra evidências de performance, não contra suposições</p>
+    </div>
+    <div class="protocol-letter">
+      <div class="p-letter">A</div>
+      <span class="p-word">Atitudes</span>
+      <p class="p-desc">Padrões de comportamento observáveis nas interações profissionais do dia a dia</p>
+    </div>
+    <div class="protocol-letter">
+      <div class="p-letter">R</div>
+      <span class="p-word">Resultados</span>
+      <p class="p-desc">Desfechos conectados a comportamentos — fechando o ciclo entre insight comportamental e impacto real</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROI / BENEFÍCIOS -->
+<section class="section section-alt">
+  <div class="section-header">
+    <span class="eyebrow">ROI estratégico</span>
+    <h2>Por que organizações e pessoas prosperam com o Bridge®</h2>
+  </div>
+  <div class="roi-grid">
+    <div>
+      <div class="roi-column-title">
+        <div class="roi-icon">🏢</div>
+        <h3>Para a Organização</h3>
+      </div>
+      <div class="roi-item">
+        <div class="roi-bullet">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#C9973A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="roi-item-title">Redução drástica de conflitos</div>
+          <p class="roi-item-text">Menos falhas de comunicação, processos redundantes e tensões nas equipes — substituídos por clareza documentada e expectativas compartilhadas.</p>
+        </div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-bullet">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#C9973A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="roi-item-title">Retenção de talentos críticos</div>
+          <p class="roi-item-text">Colaboradores que são ouvidos e compreendidos demonstram maior senso de pertencimento, reduzindo o ciclo custoso de turnover e recontratação.</p>
+        </div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-bullet">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#C9973A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="roi-item-title">Blindagem e conformidade NR-1</div>
+          <p class="roi-item-text">Intervenção concreta e documentada contra riscos psicossociais — promovendo um ambiente psicologicamente seguro e reduzindo o estresse ocupacional com evidência registrada.</p>
+        </div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-bullet">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#C9973A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="roi-item-title">Decisões de gestão baseadas em dados</div>
+          <p class="roi-item-text">Gestão de pessoas sustentada em inteligência comportamental (People Analytics) — reduzindo decisões por intuição e os custos da má alocação de talentos.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="roi-column-title">
+        <div class="roi-icon">👤</div>
+        <h3>Para o Colaborador</h3>
+      </div>
+      <div class="roi-item">
+        <div class="roi-bullet">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#C9973A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="roi-item-title">Autopercepção e clareza real</div>
+          <p class="roi-item-text">Uma comparação em tempo real entre a autoavaliação e a percepção da liderança — eliminando a ambiguidade que corrói a confiança e o engajamento.</p>
+        </div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-bullet">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#C9973A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="roi-item-title">Segurança psicológica</div>
+          <p class="roi-item-text">Redução de incertezas e medos não ditos, promovendo um ambiente profissional onde saúde mental e alta performance coexistem por design.</p>
+        </div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-bullet">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#C9973A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="roi-item-title">Valorização real</div>
+          <p class="roi-item-text">A experiência concreta de ser reconhecido como parte integrante da cultura e da estratégia de crescimento da organização — não apenas uma função no organograma.</p>
+        </div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-bullet">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#C9973A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="roi-item-title">Um caminho de evolução concreto</div>
+          <p class="roi-item-text">Um plano de desenvolvimento personalizado e documentado que conecta o crescimento comportamental a resultados mensuráveis de carreira e de performance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="section">
+  <div class="section-header">
+    <span class="eyebrow">Impacto</span>
+    <h2>O que líderes e profissionais vivenciam</h2>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="t-quote">"</div>
+      <p class="t-text">Barroso transmite uma paz genuína na sua forma de nos orientar. Ele tem a capacidade de ir além das aparências e revelar as nossas emoções mais profundas. Uma experiência rara de rigor com humanidade.</p>
+      <div class="t-author">
+        <div class="t-avatar">SS</div>
+        <div>
+          <div class="t-name">Solange Santana</div>
+          <div class="t-role">Supervisora de Vendas</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-quote">"</div>
+      <p class="t-text">O trabalho de Barroso mudou a minha visão de como me vejo a mim próprio. Hoje tenho uma liderança mais segura e consistente. As minhas decisões são mais fundamentadas e as minhas interações com a equipe, mais deliberadas.</p>
+      <div class="t-author">
+        <div class="t-avatar">WB</div>
+        <div>
+          <div class="t-name">Wagner Bransford</div>
+          <div class="t-role">Supervisor de Call Center</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-quote">"</div>
+      <p class="t-text">Imersão reflexiva muito boa. De arrepiar e repensar muita coisa da nossa vida e do nosso trabalho. A sessão provocou perguntas que eu não tinha pensado em fazer — e me deu as ferramentas para agir sobre elas.</p>
+      <div class="t-author">
+        <div class="t-avatar">AN</div>
+        <div>
+          <div class="t-name">Participante anônimo</div>
+          <div class="t-role">Reflexão pós-sessão</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROVA DE CONCEITO -->
+<section class="section section-dark" id="trial">
+  <div class="trial-wrapper">
+    <div class="trial-left">
+      <div class="trial-badge">
+        <span>● &nbsp; Sem custo · Sem compromisso</span>
+      </div>
+      <h2>Prova de Conceito: Decida com segurança.</h2>
+      <p>Aplique o MyNorth Bridge® em 3 pares estratégicos líder–liderado na sua organização. Experimente a metodologia. Meça a clareza gerada. Depois decida.</p>
+      <a href="mailto:soubarrosojr@gmail.com" class="trial-cta">
+        Solicitar sua Prova de Conceito →
+      </a>
+    </div>
+    <div class="trial-right">
+      <div class="trial-feature">
+        <div class="trial-feature-icon">◈</div>
+        <div>
+          <div class="trial-feature-title">3 pares estratégicos definidos por você</div>
+          <p class="trial-feature-text">Você escolhe as relações líder–liderado com maior valor estratégico ou necessidade mais crítica de alinhamento.</p>
+        </div>
+      </div>
+      <div class="trial-feature">
+        <div class="trial-feature-icon">◎</div>
+        <div>
+          <div class="trial-feature-title">Sessões individuais de 1 hora por pessoa</div>
+          <p class="trial-feature-text">Sessões Bridge® estruturadas conduzidas de forma virtual. Sem interrupção operacional. Sem dinâmicas de grupo influenciando respostas individuais.</p>
+        </div>
+      </div>
+      <div class="trial-feature">
+        <div class="trial-feature-icon">◉</div>
+        <div>
+          <div class="trial-feature-title">Relatório completo de alinhamento entregue</div>
+          <p class="trial-feature-text">Análise completa das lacunas de percepção com achados documentados e plano de evolução comportamental por participante — entregue à sua organização.</p>
+        </div>
+      </div>
+      <div class="trial-feature">
+        <div class="trial-feature-icon">◆</div>
+        <div>
+          <div class="trial-feature-title">Sem investimento financeiro inicial</div>
+          <p class="trial-feature-text">A Prova de Conceito é realizada sem custo e sem obrigação de avançar para a implementação completa do programa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTORIDADE -->
+<section class="section section-alt">
+  <div class="section-header">
+    <span class="eyebrow">O método por trás da metodologia</span>
+    <h2>20 anos de ciência aplicada.<br>10.000 profissionais. Um sistema.</h2>
+  </div>
+  <div class="authority-wrapper">
+    <div class="authority-card">
+      <div class="authority-avatar">BJ</div>
+      <div class="authority-name">Barroso Jr.</div>
+      <div class="authority-title">Mestre em Desenvolvimento Humano · Especialista em Performance Organizacional</div>
+      <div class="authority-stats">
+        <div class="authority-stat">
+          <div class="authority-stat-num">20+</div>
+          <div class="authority-stat-label">Anos de experiência</div>
+        </div>
+        <div class="authority-stat">
+          <div class="authority-stat-num">10K+</div>
+          <div class="authority-stat-label">Profissionais impactados</div>
+        </div>
+        <div class="authority-stat">
+          <div class="authority-stat-num">2</div>
+          <div class="authority-stat-label">Métodos proprietários</div>
+        </div>
+        <div class="authority-stat">
+          <div class="authority-stat-num">B2B</div>
+          <div class="authority-stat-label">Foco empresarial</div>
+        </div>
+      </div>
+    </div>
+    <div class="authority-bio">
+      <p>Barroso Jr. transitou da liderança acadêmica — dirigindo campi universitários e coordenando graduações e pós-graduações — para a consultoria executiva exatamente porque identificou a lacuna persistente entre o que as instituições ensinam sobre gestão de pessoas e o que as organizações realmente precisam.</p>
+      <p>Essa lacuna se tornou o fundamento do <strong>Método Autoconhecimento Organizacional</strong> e de seus instrumentos aplicados: o MyNorth®, mecanismo de perfilamento comportamental, e o MyNorth Bridge®, o sistema de mediação relacional.</p>
+      <p>Ambas as ferramentas emergiram de uma única convicção: <strong>organizações que compreendem seus colaboradores no nível comportamental tomam decisões sistematicamente melhores</strong> — em contratação, retenção, liderança e cultura. Os dados substituem o achismo. A estrutura substitui o confronto. Os resultados falam pelos números.</p>
+      <p>Com mais de 10.000 profissionais impactados em contextos corporativos e acadêmicos, Barroso Jr. integra rigor acadêmico, experiência executiva e frameworks proprietários para transformar a gestão de pessoas em vantagem competitiva real e mensurável.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RODAPÉ DE CONTATO -->
+<footer class="contact-bar">
+  <div class="contact-brand">MyNorth <span>Bridge®</span></div>
+  <div class="contact-items">
+    <div class="contact-item">
+      <span class="contact-item-label">E-mail</span>
+      <span class="contact-item-value"><a href="mailto:soubarrosojr@gmail.com">soubarrosojr@gmail.com</a></span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">LinkedIn</span>
+      <span class="contact-item-value"><a href="https://linkedin.com/in/barrosojunior-guiadetalentos" target="_blank">barrosojunior-guiadetalentos</a></span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Celular / WhatsApp</span>
+      <span class="contact-item-value"><a href="tel:+351912159409">912 159 409</a></span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Por</span>
+      <span class="contact-item-value">Barroso Jr. · Guia de Talentos</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
